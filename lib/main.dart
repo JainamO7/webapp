@@ -12,7 +12,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Sampark Download',
       theme: ThemeData.dark().copyWith(
-        scaffoldBackgroundColor: Colors.transparent, // allow gradient to show
+        scaffoldBackgroundColor: Colors.transparent,
         primaryColor: Colors.blueAccent,
       ),
       home: const HomePage(),
@@ -24,25 +24,26 @@ class MyApp extends StatelessWidget {
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
-  final String apkUrl = 'https://yourserver.com/app-release.apk';
+  // ✅ YOUR FIREBASE APK DIRECT DOWNLOAD LINK
+final String apkUrl = 'https://github.com/JainamO7/webapp/releases/download/1.0.0/app-release.apk';
+
   final String heroImageUrl =
       'https://superbcompanies.s3.eu-central-1.amazonaws.com/images/companies/logos/8d7cda80-61b8-11ed-b2a5-a9129be4f41e.png';
 
-  void _onDownloadPressed() {
-    final anchor =
-        html.AnchorElement(href: apkUrl)
-          ..setAttribute('download', '')
-          ..target = '_blank';
-    html.document.body?.append(anchor);
-    anchor.click();
-    anchor.remove();
-  }
+void _onDownloadPressed() {
+  final anchor = html.AnchorElement(href: apkUrl)
+    ..setAttribute('download', 'hightech.apk')
+    ..target = '_blank';
+  html.document.body?.append(anchor);
+  anchor.click();
+  anchor.remove();
+}
+
 
   @override
   Widget build(BuildContext context) {
     final theme = Theme.of(context);
     return Scaffold(
-      // Make scaffold background transparent so gradient shows
       backgroundColor: Colors.transparent,
       body: Container(
         width: double.infinity,
@@ -52,9 +53,8 @@ class HomePage extends StatelessWidget {
             begin: Alignment.topLeft,
             end: Alignment.bottomRight,
             colors: [
-              Color(0xFF0D47A1), // deep blue
-              Color(0xFF1976D2), // lighter blue
-              // you can add more colors
+              Color(0xFF0D47A1),
+              Color(0xFF1976D2),
             ],
           ),
         ),
@@ -64,9 +64,7 @@ class HomePage extends StatelessWidget {
             padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 48),
             child: LayoutBuilder(
               builder: (context, constraints) {
-                // switch layout for narrow width
                 if (constraints.maxWidth < 600) {
-                  // mobile / small
                   return Column(
                     mainAxisSize: MainAxisSize.min,
                     children: [
@@ -76,7 +74,6 @@ class HomePage extends StatelessWidget {
                     ],
                   );
                 } else {
-                  // wide screen
                   return Row(
                     children: [
                       Expanded(flex: 5, child: _buildTextSection(theme)),
